@@ -1,0 +1,6 @@
+Mongoose CRUD Operations Process Notes
+======================================
+
+Resources
+=========
+https://medium.com/@yugagrawal95/mongoose-mongodb-functions-for-crud-application-1f54d74f1b34  -- List of CRUD operations for mongoose.
