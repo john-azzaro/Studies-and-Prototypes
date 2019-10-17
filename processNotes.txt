@@ -1,10 +1,7 @@
-Mongoose Study Process Notes
+Mongoose CRUD Operations study
 ============================
 * For full process, see the readme.md file.
 
 Resources
 =========
-https://futurestud.io/tutorials/understanding-virtuals-in-mongoose -- understanding virtuals
-http://thecodebarbarian.com/mongoose-virtual-populate -- virtuals and populate
-https://mongoosejs.com/docs/2.7.x/docs/virtuals.html    -- virtual attributes
-https://kb.objectrocket.com/mongo-db/how-to-add-instance-methods-with-mongoose-236  -- instance methods with mongoose
+https://coursework.vschool.io/mongoose-crud/  -- CRUD functions

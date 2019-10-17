@@ -1,5 +1,5 @@
 # Mongoose CRUD Operatations Study
-> Note that this is a continuation of the **Mongoose Configuration and Data Modeling Study**, which you can find [here](https://github.com/john-azzaro/Study-Mongoose-Configuration-and-Data-Modeling "LInk to Mongoose Study")here.
+> IMPORTANT: Mongoose CRUD Operations Study is a continuation of the **Mongoose Configuration and Data Modeling Study**. To find out more about configuration and data models, click [here](https://github.com/john-azzaro/Study-Mongoose-Configuration-and-Data-Modeling "Link to Mongoose Study").
 
 <br>
 
