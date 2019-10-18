@@ -23,7 +23,7 @@ Here's some questions covered in the study:
 <dl>
 <dd>
 
-
+CRUD (Create, Read, Update, Delete) are common HTTP methods for communicating with a given server. CRUD operations allow you to make queries in the server's JavaScript code using Mongooseand can be peformed anywhere in your code.
 
 </dd>
 </dl>
