@@ -164,12 +164,26 @@ which has been processed through the ```.serialize``` instance method
     app.get("/books/:id", (req, res) => {
     Books
         .findById(req.params.id)
-        .then(books => res.json(books.serialize()))
+        .then(books => res.json(books.serialize()))   //send back the book by id via serialization.
         ...
         ...
     });
 ```
 
+## STEP 4: If unsuccessful, send back error:
+And of course, if there is an error, send back a 500 internal server error asd a response with a message.
+
+```JavaScript
+    app.get("/books/:id", (req, res) => {
+    Books
+        .findById(req.params.id)
+        .then(books => res.json(books.serialize()))
+        .catch(err => {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+        });
+    });
+```
 
 
 
