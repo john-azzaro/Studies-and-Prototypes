@@ -4,7 +4,7 @@
 <br>
 
 ## What is the Mongoose CRUD Operations Study
-The Mongoose CRUD Operations study is an examination of 
+The Mongoose CRUD Operations study is an examination of built-in methods that Create, Read, Update, and Delete information from the MongoDB database. 
 
 Here's some questions covered in the study:
 
