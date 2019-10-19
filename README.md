@@ -43,10 +43,42 @@ In the case of this study, Mongoose has a few ways to *get* the document (stored
 <br>
 
 ## How do you FIND documents using Mongoose?
+When you *find* a document, you are essentially reading the documents from the database. In the example below, the client is sending a GET request to the /books endpoint to return 10 books.
+
 <dl>
 <dd>
 
+### STEP 1: Create a GET route:
+First, we need to send a GET request to the /books endpoint.
+```JavaScript
+    app.get("/books", (req, res) => {
+        // code goes here.
+    });
+```
 
+### STEP 2: Call the model with the .find method:
+
+
+```JavaScript
+    app.get("/books", (req, res) => {
+    Book.find()
+        // we're limiting because restaurants db has > 25,000
+        // documents, and that's too much to process/return
+        .limit(10)
+        // success callback: for each restaurant we got back, we'll
+        // call the `.serialize` instance method we've created in
+        // models.js in order to only expose the data we want the API return.    
+        .then(books => {
+        res.json({
+            books: books.map(books => books.serialize())
+        });
+        })
+        .catch(err => {
+        console.error(err);
+        res.status(500).json({ message: "Internal server error" });
+        });
+    });
+```
 
 </dd>
 </dl>
