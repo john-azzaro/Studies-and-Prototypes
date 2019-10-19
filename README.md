@@ -87,7 +87,7 @@ Sometimes, you have to narrow down the scope of the documents you find in the da
     });
 ```
 
-### STEP 4: Success callback!
+### STEP 4: Successful callback!
 If the request is successful, we use the ```.then``` method to *return a promise* (from models.js). This will send an object with the property ```books``` whose value is an array of ```books``` objects. Then, for each```books``` we get back (i.e. ```books.map()```) from the collection query, call the ```.serialize``` instance method (see the serialize instance method from models.js) so that only certain info will be exposed when the API returns the data (i.e. does not return sensitive information).
 
 ```JavaScript
@@ -131,12 +131,30 @@ If there is an error with the GET request, send a response with a 500 status cod
 With **find by ID**, your objective is to find an *exact match* for your query. Then the server will send back a single object representing the requested book. In this example, we're finding a book by id. This is how we do it.
 
 1. **Send a GET request** to the endpoint ```/books:id```.
-2.  
-
-
+2. **Call the model with the ```.findById```**.
+3. **If the callback is successful**, 
 
 <dl>
 <dd>
+
+## STEP 1: Create a GET route:
+Almost identical to the standard ```.find``` route, only this time we are adding an ```/:id``` to the endpoint. 
+```JavaScript
+    app.get("/books/:id", (req, res) => {
+        ...
+        ...
+    });
+```
+
+## STEP 2: 
+
+
+
+
+
+
+
+
 
 
 
