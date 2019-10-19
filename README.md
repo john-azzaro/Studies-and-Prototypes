@@ -43,7 +43,17 @@ In the case of this study, Mongoose has a few ways to *get* the document (stored
 <br>
 
 ## How do you FIND documents using Mongoose?
-When you *find* a document, you are essentially reading the documents from the database. In the example below, the client is sending a GET request to the /books endpoint to return 10 books.
+When you *find* a document, you are essentially reading the documents from the database. 
+
+In the example below, the client is sending a GET request to the /books endpoint to return 10 books. The way we do this is as follows:
+1. Send a GET request to the endpoint ```/books```.
+2. First, find ALL the documents at the ```/books``` endpoint.
+3. Only get the first 10 documents from the ```/books``` endpoint.
+4. If successful, send a response with an object whose value is an array of ```books``` and for each book in the, apply the 
+   ```serialize``` instance method so that only the information you want is sent back as a response.
+5. 
+
+
 
 <dl>
 <dd>
@@ -68,7 +78,7 @@ When you call ```Books.find()```, by default will retrieve all the documents in 
 ```
 
 ### STEP 3: Add any additional methods before success callback:
-Sometimes, you have to narrow down the scope of the documents you find in the database. For example, suppose you had a database with hundreds, if not *thousands* of documents. In cases like those, you want to limit the return to only a few documents.
+Sometimes, you have to narrow down the scope of the documents you find in the database. For example, suppose you had a database with hundreds, if not *thousands* of documents. In cases like those, you want to limit the return to only a few documents with the ```.limit``` method. The ```.limit``` method takes one parameter, which is a number defining how many documents to return (i.e. 10).
 ```JavaScript
     app.get("/books", (req, res) => {
         Book.find()
@@ -79,7 +89,7 @@ Sometimes, you have to narrow down the scope of the documents you find in the da
 ```
 
 ### STEP 4: Success callback!
-If the request is successful, we use the ```.then``` method. This will send and object with the property ```books``` whose value is an array of ```books``` objects. Then, for each```books``` we get back (i.e. ```books.map()```) from the collection query, call the ```.serialize``` instance method (see the serialize instance method from models.js) so that only certain info will be exposed when the API returns the data (i.e. does not return sensitive information).
+If the request is successful, we use the ```.then``` method to *return a promise* (from models.js). This will send an object with the property ```books``` whose value is an array of ```books``` objects. Then, for each```books``` we get back (i.e. ```books.map()```) from the collection query, call the ```.serialize``` instance method (see the serialize instance method from models.js) so that only certain info will be exposed when the API returns the data (i.e. does not return sensitive information).
 
 ```JavaScript
     app.get("/books", (req, res) => {
