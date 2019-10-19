@@ -79,13 +79,13 @@ Sometimes, you have to narrow down the scope of the documents you find in the da
 ```
 
 ### STEP 4: Success callback!
-For the success callback, send a json response and for every book we get back from the collection, map with the .serialize instance method (from models.js) so that only certain info will be exposed when the API returns the data,
+If the request is successful, we use the ```.then``` method. This will send and object with the property ```books``` whose value is an array of ```books``` objects. Then, for each```books``` we get back (i.e. ```books.map()```) from the collection query, call the ```.serialize``` instance method (see the serialize instance method from models.js) so that only certain info will be exposed when the API returns the data (i.e. does not return sensitive information).
 
 ```JavaScript
     app.get("/books", (req, res) => {
     Book.find()
         .limit(10)
-        .then(books => {
+        .then(books => {                         // successful callback
         res.json({
             books: books.map(books => books.serialize())
         });
@@ -95,13 +95,8 @@ For the success callback, send a json response and for every book we get back fr
     });
 ```
 
-### STEP 5: 
-
-
-
-
-
-
+### STEP 5: And if there is an error, catch as an error:
+If there is an error with the GET request, log an error and a 500 status code (server error) message to the client.
 ```JavaScript
     app.get("/books", (req, res) => {
     Book.find()
