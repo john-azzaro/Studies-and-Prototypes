@@ -61,9 +61,9 @@ First, we need to send a GET request to the /books endpoint.
 When you call ```Books.find()```, by default will retrieve all the documents in the collection.
 ```JavaScript
     app.get("/books", (req, res) => {
-        Book.find()                              // Find all documents in the Book collection.
-        ...
-        ...
+       .find()                              // Find all documents in the Book collection.
+       ...
+       ...
     });
 ```
 
@@ -78,14 +78,34 @@ Sometimes, you have to narrow down the scope of the documents you find in the da
     });
 ```
 
+### STEP 4: Success callback!
+For the success callback, send a json response and for every book we get back from the collection, map with the .serialize instance method (from models.js) so that only certain info will be exposed when the API returns the data,
 
 ```JavaScript
     app.get("/books", (req, res) => {
     Book.find()
         .limit(10)
-        // success callback: for each restaurant we got back, we'll
-        // call the `.serialize` instance method we've created in
-        // models.js in order to only expose the data we want the API return.    
+        .then(books => {
+        res.json({
+            books: books.map(books => books.serialize())
+        });
+        })
+        ...
+        ...
+    });
+```
+
+### STEP 5: 
+
+
+
+
+
+
+```JavaScript
+    app.get("/books", (req, res) => {
+    Book.find()
+        .limit(10)
         .then(books => {
         res.json({
             books: books.map(books => books.serialize())
