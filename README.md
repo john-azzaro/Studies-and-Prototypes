@@ -51,7 +51,7 @@ When you *find* a document, you are essentially reading the documents from the d
 ### STEP 1: Create a GET route:
 First, we need to send a GET request to the /books endpoint.
 ```JavaScript
-    app.get("/books", (req, res) => {             // GET request to /books endpoint.
+    app.get("/books", (req, res) => {                                  // GET request to /books endpoint.
         ...
         ...
     });
@@ -61,7 +61,7 @@ First, we need to send a GET request to the /books endpoint.
 When you call ```Books.find()```, by default will retrieve all the documents in the collection.
 ```JavaScript
     app.get("/books", (req, res) => {
-       .find()                              // Find all documents in the Book collection.
+       .find()                                               // Find all documents in the Book collection.
        ...
        ...
     });
@@ -72,7 +72,7 @@ Sometimes, you have to narrow down the scope of the documents you find in the da
 ```JavaScript
     app.get("/books", (req, res) => {
         Book.find()
-            .limit(10)                           // Limit return to 10 documents.
+            .limit(10)                                                   // Limit return to 10 documents.
             ...
             ...
     });
@@ -85,7 +85,7 @@ If the request is successful, we use the ```.then``` method. This will send and 
     app.get("/books", (req, res) => {
     Book.find()
         .limit(10)
-        .then(books => {                         // successful callback
+        .then(books => {                                                // successful callback
         res.json({
             books: books.map(books => books.serialize())
         });
@@ -106,7 +106,7 @@ If there is an error with the GET request, log an error and a 500 status code (s
             books: books.map(books => books.serialize())
         });
         })
-        .catch(err => {
+        .catch(err => {                                                 // catch error (if any).
         console.error(err);
         res.status(500).json({ message: "Internal server error" });
         });
