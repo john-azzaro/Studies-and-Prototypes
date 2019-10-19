@@ -51,19 +51,37 @@ When you *find* a document, you are essentially reading the documents from the d
 ### STEP 1: Create a GET route:
 First, we need to send a GET request to the /books endpoint.
 ```JavaScript
-    app.get("/books", (req, res) => {
-        // code goes here.
+    app.get("/books", (req, res) => {             // GET request to /books endpoint.
+        ...
+        ...
     });
 ```
 
 ### STEP 2: Call the model with the .find method:
+When you call ```Books.find()```, by default will retrieve all the documents in the collection.
+```JavaScript
+    app.get("/books", (req, res) => {
+        Book.find()                              // Find all documents in the Book collection.
+        ...
+        ...
+    });
+```
+
+### STEP 3: Add any additional methods before success callback:
+Sometimes, you have to narrow down the scope of the documents you find in the database. For example, suppose you had a database with hundreds, if not *thousands* of documents. In cases like those, you want to limit the return to only a few documents.
+```JavaScript
+    app.get("/books", (req, res) => {
+        Book.find()
+            .limit(10)                           // Limit return to 10 documents.
+            ...
+            ...
+    });
+```
 
 
 ```JavaScript
     app.get("/books", (req, res) => {
     Book.find()
-        // we're limiting because restaurants db has > 25,000
-        // documents, and that's too much to process/return
         .limit(10)
         // success callback: for each restaurant we got back, we'll
         // call the `.serialize` instance method we've created in
