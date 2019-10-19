@@ -46,11 +46,13 @@ In the case of this study, Mongoose has a few ways to *get* the document (stored
 When you *find* a document, you are essentially reading the documents from the database. In the example below, the client is sending a GET request to the /books endpoint to return 10 books. The way we do this is as follows:
 
 1. **Send a GET request** to the endpoint ```/books```.
-2. First, **find ALL the documents** at the ```/books``` endpoint.
-3. Only **get the first 10 documents** from the ```/books``` endpoint.
+2. **Find ALL the documents** at the ```/books``` endpoint.
+3. **Only get the first 10 documents** from the ```/books``` endpoint.
 4. **If successful, send a response with an object** whose value is an array of ```books``` and for each book in the, apply the 
    ```serialize``` instance method so that only the information you want is sent back as a response.
 5. **If unsuccessful, send error message** with server error.
+
+So to put this into practice, start by creating a GET route:
 
 <dl>
 <dd>
@@ -103,7 +105,7 @@ If the request is successful, we use the ```.then``` method to *return a promise
 ```
 
 ### STEP 5: And if there is an error, catch as an error:
-If there is an error with the GET request, log an error and a 500 status code (server error) message to the client.
+If there is an error with the GET request, send a response with a 500 status code (i.e. server error) and a message to the client saying that there was in fact a server error.
 ```JavaScript
     app.get("/books", (req, res) => {
     Book.find()
@@ -115,7 +117,7 @@ If there is an error with the GET request, log an error and a 500 status code (s
         })
         .catch(err => {                                                 // catch error (if any).
         console.error(err);
-        res.status(500).json({ message: "Internal server error" });
+            res.status(500).json({ message: "Internal server error" });
         });
     });
 ```
@@ -126,6 +128,13 @@ If there is an error with the GET request, log an error and a 500 status code (s
 <br>
 
 ## How do you FIND BY ID using Mongoose?
+With **find by ID**, your objective is to find an *exact match* for your query. Then the server will send back a single object representing the requested book. In this example, we're finding a book by id. This is how we do it.
+
+1. **Send a GET request** to the endpoint ```/books:id```.
+2.  
+
+
+
 <dl>
 <dd>
 
