@@ -70,7 +70,7 @@ First, we need to send a GET request to the /books endpoint.
 When you call ```Books.find()```, by default will retrieve all the documents in the collection.
 ```JavaScript
     app.get("/books", (req, res) => {
-       .find()                                               // Find all documents in the Book collection.
+       Books.find()                                               // Find all documents in the Book collection.
        ...
        ...
     });
@@ -80,7 +80,7 @@ When you call ```Books.find()```, by default will retrieve all the documents in 
 Sometimes, you have to narrow down the scope of the documents you find in the database. For example, suppose you had a database with hundreds, if not *thousands* of documents. In cases like those, you want to limit the return to only a few documents with the ```.limit``` method. The ```.limit``` method takes one parameter, which is a number defining how many documents to return (i.e. 10).
 ```JavaScript
     app.get("/books", (req, res) => {
-        Book.find()
+        Books.find()
             .limit(10)                                                   // Limit return to 10 documents.
             ...
             ...
@@ -92,7 +92,7 @@ If the request is successful, we use the ```.then``` method to *return a promise
 
 ```JavaScript
     app.get("/books", (req, res) => {
-    Book.find()
+    Books.find()
         .limit(10)
         .then(books => {                                                // successful callback
         res.json({
@@ -108,7 +108,7 @@ If the request is successful, we use the ```.then``` method to *return a promise
 If there is an error with the GET request, send a response with a 500 status code (i.e. server error) and a message to the client saying that there was in fact a server error.
 ```JavaScript
     app.get("/books", (req, res) => {
-    Book.find()
+    Books.find()
         .limit(10)
         .then(books => {
         res.json({
@@ -140,18 +140,35 @@ With **find by ID**, your objective is to find an *exact match* for your query. 
 ## STEP 1: Create a GET route:
 Almost identical to the standard ```.find``` route, only this time we are adding an ```/:id``` to the endpoint. 
 ```JavaScript
-    app.get("/books/:id", (req, res) => {
+    app.get("/books/:id", (req, res) => {             // get request to the /books/:id endpoint.
         ...
         ...
     });
 ```
 
-## STEP 2: 
+## STEP 2: Call the model with the ".findById" method:
+Again, almost identical to th the ```.find``` route, except we want to find the document by id and pass in the user requested endpoint.
+```JavaScript
+    app.get("/books/:id", (req, res) => {
+    Books                                           // from imported model (models.js)...
+        .findById(req.params.id)                    // ... find by id parameter provided by user.
+        ...
+        ...
+    });
+```
 
-
-
-
-
+## STEP 3: Successful callback! 
+If the promise is successful (i.e. if the get request to the endpoint is valid and the id is found), *then* the reponse will be a json object of the book
+which has been processed through the ```.serialize``` instance method
+```JavaScript
+    app.get("/books/:id", (req, res) => {
+    Books
+        .findById(req.params.id)
+        .then(books => res.json(books.serialize()))
+        ...
+        ...
+    });
+```
 
 
 
