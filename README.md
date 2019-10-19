@@ -43,17 +43,14 @@ In the case of this study, Mongoose has a few ways to *get* the document (stored
 <br>
 
 ## How do you FIND documents using Mongoose?
-When you *find* a document, you are essentially reading the documents from the database. 
+When you *find* a document, you are essentially reading the documents from the database. In the example below, the client is sending a GET request to the /books endpoint to return 10 books. The way we do this is as follows:
 
-In the example below, the client is sending a GET request to the /books endpoint to return 10 books. The way we do this is as follows:
-1. Send a GET request to the endpoint ```/books```.
-2. First, find ALL the documents at the ```/books``` endpoint.
-3. Only get the first 10 documents from the ```/books``` endpoint.
-4. If successful, send a response with an object whose value is an array of ```books``` and for each book in the, apply the 
+1. **Send a GET request** to the endpoint ```/books```.
+2. First, **find ALL the documents** at the ```/books``` endpoint.
+3. Only **get the first 10 documents** from the ```/books``` endpoint.
+4. **If successful, send a response with an object** whose value is an array of ```books``` and for each book in the, apply the 
    ```serialize``` instance method so that only the information you want is sent back as a response.
-5. 
-
-
+5. **If unsuccessful, send error message** with server error.
 
 <dl>
 <dd>
