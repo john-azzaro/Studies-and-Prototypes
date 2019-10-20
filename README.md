@@ -195,13 +195,44 @@ And of course, if there is an error, send back a 500 internal server error asd a
 ## How do you FIND BY VALUE using Mongoose?
 When you find by value, that is, find by optional requests such as author and book or book and isPublished, you need to use```findByValue```. There is a little more to ```findByValue``` than the previous READ operations you need to do:
 
-1. 
+1. **Send a GET request** to the endpoint ```/books```.
+2. **Modify the GET endpoint** to support optional search parameters.
+3. **Call the model with the ```.find``` method**.
+4. **If successful, send the results**.
+5. **If unsuccessful**, send an error message.
 
 
 <dl>
 <dd>
 
+### STEP 1: Create a GET route:
+First, we need to send a GET request to the /books endpoint.
+```JavaScript
+    app.get("/books", (req, res) => {                                  // GET request to /books endpoint.
+        ...
+        ...
+    });
+```
 
+### STEP 2: Limit GET requests to certain properties:
+If the client includes either "author" or "title" as URL parameters, it will only return those that match the requested values. This *query criteria* (i.e. ```filter```) will be passed to ```find``` in the next step (i.e. Books.find(filters)).
+
+```JavaScript
+    app.get("/books", (req, res) => {       
+        const filter = {};                                       // variable to store query criteria
+        const queryableFields = ['author', 'title'];             // query fields
+        queryableFields.forEach(field => {                       // for each of the query fields:
+            if (req.query[field]) {                              // if the field matches return.... 
+                Books.[field] = req.query[field];                // reutnr the requested values.
+            }
+        })
+        ...
+    });
+```
+
+
+### STEP 4: Successful callback!
+If the request is successful, we use the ```.then``` method to *return a promise* (from models.js). This will send an object with the property ```books``` whose value is an array of ```books``` objects. Then, for each```books``` we get back (i.e. ```books.map()```) from the collection query, call the ```.serialize``` instance method (see the serialize instance method from models.js) so that only certain info will be exposed when the API returns the data (i.e. does not return sensitive information).
 
 </dd>
 </dl>
