@@ -140,7 +140,7 @@ With **find by ID**, your objective is to find an *exact match* for your query. 
 <dl>
 <dd>
 
-## STEP 1: Create a GET route:
+### STEP 1: Create a GET route:
 Almost identical to the standard ```.find``` route, only this time we are adding an ```/:id``` to the endpoint. 
 ```JavaScript
     app.get("/books/:id", (req, res) => {             // get request to the /books/:id endpoint.
@@ -149,7 +149,7 @@ Almost identical to the standard ```.find``` route, only this time we are adding
     });
 ```
 
-## STEP 2: Call the model with the ".findById" method:
+### STEP 2: Call the model with the ".findById" method:
 Again, almost identical to th the ```.find``` route, except we want to find the document by id and pass in the user requested endpoint.
 ```JavaScript
     app.get("/books/:id", (req, res) => {
@@ -160,7 +160,7 @@ Again, almost identical to th the ```.find``` route, except we want to find the 
     });
 ```
 
-## STEP 3: Successful callback! 
+### STEP 3: Successful callback! 
 If the promise is successful (i.e. if the get request to the endpoint is valid and the id is found), *then* the reponse will be a json object of the book
 which has been processed through the ```.serialize``` instance method
 ```JavaScript
@@ -173,7 +173,7 @@ which has been processed through the ```.serialize``` instance method
     });
 ```
 
-## STEP 4: If unsuccessful, send back error:
+### STEP 4: If unsuccessful, send back error:
 And of course, if there is an error, send back a 500 internal server error asd a response with a message.
 
 ```JavaScript
@@ -276,7 +276,7 @@ If the request is successful, we use the ```.then``` method to *return a promise
     });
 ```
 
-## STEP 4: If unsuccessful, send back error:
+### STEP 4: If unsuccessful, send back error:
 And of course, if there is an error, send back a 500 internal server error asd a response with a message.
 ```JavaScript
     app.get("/books", (req, res) => {       
@@ -306,9 +306,57 @@ And of course, if there is an error, send back a 500 internal server error asd a
 <br>
 
 ## How do you UPDATE a document using Mongoose?
-To UPDATE and 
+When you UPDATE items in your database, you query the database and send a change to be made using the method ```.findByItAndUpdate```. To do this, we need to:
+
+1. Check to see whether or not the id in the request path AND the request body match.
+2. Create an object of fields to be updated.
+3. 
+
+
+
+
+
+
+
+```JavaScript
+    app.put("/restaurants/:id", (req, res) => {
+        if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+            const message =
+            `Request path id (${req.params.id}) and request body id ` +
+            `(${req.body.id}) must match`;
+            console.error(message);
+            return res.status(400).json({ message: message });
+        }
+
+    // we only support a subset of fields being updateable.
+    // if the user sent over any of the updatableFields, we udpate those values
+    // in document
+    const toUpdate = {};
+    const updateableFields = ["name", "borough", "cuisine", "address"];
+
+    updateableFields.forEach(field => {
+        if (field in req.body) {
+        toUpdate[field] = req.body[field];
+        }
+    });
+
+    Restaurant
+        // all key/value pairs in toUpdate will be updated -- that's what `$set` does
+        .findByIdAndUpdate(req.params.id, { $set: toUpdate })
+        .then(restaurant => res.status(204).end())
+        .catch(err => res.status(500).json({ message: "Internal server error" }));
+    });
+```
+
+
+
+
+
+
 <dl>
 <dd>
+
+
 
 
 
