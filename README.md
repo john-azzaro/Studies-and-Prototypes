@@ -60,6 +60,7 @@ So to put this into practice, start by creating a GET route:
 <dd>
 
 ### STEP 1: Create a GET route:
+-----
 First, we need to send a GET request to the /books endpoint.
 ```JavaScript
     app.get("/books", (req, res) => {                                  // GET request to /books endpoint.
@@ -69,6 +70,7 @@ First, we need to send a GET request to the /books endpoint.
 ```
 
 ### STEP 2: Call the model with the .find method:
+-----
 When you call ```Books.find()```, by default will retrieve all the documents in the collection.
 ```JavaScript
     app.get("/books", (req, res) => {
@@ -79,6 +81,7 @@ When you call ```Books.find()```, by default will retrieve all the documents in 
 ```
 
 ### STEP 3: Add any additional methods before success callback:
+-----
 Sometimes, you have to narrow down the scope of the documents you find in the database. For example, suppose you had a database with hundreds, if not *thousands* of documents. In cases like those, you want to limit the return to only a few documents with the ```.limit``` method. The ```.limit``` method takes one parameter, which is a number defining how many documents to return (i.e. 10).
 ```JavaScript
     app.get("/books", (req, res) => {
@@ -90,6 +93,7 @@ Sometimes, you have to narrow down the scope of the documents you find in the da
 ```
 
 ### STEP 4: Successful callback!
+-----
 If the request is successful, we use the ```.then``` method to *return a promise* (from models.js). This will send an object with the property ```books``` whose value is an array of ```books``` objects. Then, for each```books``` we get back (i.e. ```books.map()```) from the collection query, call the ```.serialize``` instance method (see the serialize instance method from models.js) so that only certain info will be exposed when the API returns the data (i.e. does not return sensitive information).
 
 ```JavaScript
@@ -107,6 +111,7 @@ If the request is successful, we use the ```.then``` method to *return a promise
 ```
 
 ### STEP 5: And if there is an error, catch as an error:
+-----
 If there is an error with the GET request, send a response with a 500 status code (i.e. server error) and a message to the client saying that there was in fact a server error.
 ```JavaScript
     app.get("/books", (req, res) => {
