@@ -153,10 +153,10 @@ Almost identical to the standard ```.find``` route, only this time we are adding
 Again, almost identical to th the ```.find``` route, except we want to find the document by id and pass in the user requested endpoint.
 ```JavaScript
     app.get("/books/:id", (req, res) => {
-    Books                                              // from imported model (models.js)...
-        .findById(req.params.id)                       // ... find by id parameter provided by user.
-        ...
-        ...
+        Books                                              // from imported model (models.js)...
+            .findById(req.params.id)                       // ... find by id parameter provided by user.
+            ...
+            ...
     });
 ```
 
@@ -165,11 +165,11 @@ If the promise is successful (i.e. if the get request to the endpoint is valid a
 which has been processed through the ```.serialize``` instance method
 ```JavaScript
     app.get("/books/:id", (req, res) => {
-    Books
-        .findById(req.params.id)
-        .then(books => res.json(books.serialize()))    // return a json string representing the object
-        ...                                            // produced by the Books serialization method.
-        ...
+        Books
+            .findById(req.params.id)
+            .then(books => res.json(books.serialize()))    // return a json string representing the object
+            ...                                            // produced by the Books serialization method.
+            ...
     });
 ```
 
@@ -178,13 +178,13 @@ And of course, if there is an error, send back a 500 internal server error asd a
 
 ```JavaScript
     app.get("/books/:id", (req, res) => {
-    Books
-        .findById(req.params.id)
-        .then(books => res.json(books.serialize()))
-        .catch(err => {                                                       // send error if needed.
-        console.error(err); 
-        res.status(500).json({ message: "Internal server error" });
-        });
+        Books
+            .findById(req.params.id)
+            .then(books => res.json(books.serialize()))
+            .catch(err => {                                                       // send error if needed.
+            console.error(err); 
+            res.status(500).json({ message: "Internal server error" });
+            });
     });
 ```
 
@@ -229,6 +229,7 @@ If the client includes either "author" or "title" as URL parameters, it will onl
             }
         })
         ...
+        ...
     });
 ```
 
@@ -245,9 +246,11 @@ Remember, if you just use ```.find()``` you will get back ALL the documents in t
                 Books.[field] = req.query[field];     
             }
         })
+
         Books
             .find(filters)
-
+            ...
+            ...
     });
 ```
 
@@ -262,11 +265,14 @@ If the request is successful, we use the ```.then``` method to *return a promise
                 Books.[field] = req.query[field];     
             }
         })
+
         Books
             .find(filters)
             .then(Books => res.json(
                 Books.map(books => books.serialize());     // return a json string representing the object
             ))                                             // produced by the Books serialization method.
+            ...
+            ...
     });
 ```
 
@@ -281,6 +287,7 @@ And of course, if there is an error, send back a 500 internal server error asd a
                 Books.[field] = req.query[field];     
             }
         })
+
         Books
             .find(filters)
             .then(Books => res.json(
@@ -299,6 +306,7 @@ And of course, if there is an error, send back a 500 internal server error asd a
 <br>
 
 ## How do you UPDATE a document using Mongoose?
+To UPDATE and 
 <dl>
 <dd>
 
