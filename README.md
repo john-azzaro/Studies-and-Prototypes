@@ -70,7 +70,7 @@ First, we need to send a GET request to the /books endpoint.
 When you call ```Books.find()```, by default will retrieve all the documents in the collection.
 ```JavaScript
     app.get("/books", (req, res) => {
-       Books.find()                                               // Find all documents in the Book collection.
+       Books.find()                                          // Find all documents in the Book collection.
        ...
        ...
     });
@@ -81,7 +81,7 @@ Sometimes, you have to narrow down the scope of the documents you find in the da
 ```JavaScript
     app.get("/books", (req, res) => {
         Books.find()
-            .limit(10)                                                   // Limit return to 10 documents.
+            .limit(10)                                                 // Limit return to 10 documents.
             ...
             ...
     });
@@ -94,7 +94,7 @@ If the request is successful, we use the ```.then``` method to *return a promise
     app.get("/books", (req, res) => {
     Books.find()
         .limit(10)
-        .then(books => {                                                // successful callback
+        .then(books => {                                                      // successful callback
         res.json({
             books: books.map(books => books.serialize())
         });
@@ -132,7 +132,8 @@ With **find by ID**, your objective is to find an *exact match* for your query. 
 
 1. **Send a GET request** to the endpoint ```/books:id```.
 2. **Call the model with the ```.findById```**.
-3. **If the callback is successful**, 
+3. **If the callback is successful**, return a json string with an object of the book.
+4. **if unsuccessful**, send an error message.
 
 <dl>
 <dd>
@@ -150,8 +151,8 @@ Almost identical to the standard ```.find``` route, only this time we are adding
 Again, almost identical to th the ```.find``` route, except we want to find the document by id and pass in the user requested endpoint.
 ```JavaScript
     app.get("/books/:id", (req, res) => {
-    Books                                           // from imported model (models.js)...
-        .findById(req.params.id)                    // ... find by id parameter provided by user.
+    Books                                              // from imported model (models.js)...
+        .findById(req.params.id)                       // ... find by id parameter provided by user.
         ...
         ...
     });
@@ -164,8 +165,8 @@ which has been processed through the ```.serialize``` instance method
     app.get("/books/:id", (req, res) => {
     Books
         .findById(req.params.id)
-        .then(books => res.json(books.serialize()))   //send back the book by id via serialization.
-        ...
+        .then(books => res.json(books.serialize()))    // return a json string representing the object
+        ...                                            // produced by the Books serialization method.
         ...
     });
 ```
@@ -178,15 +179,12 @@ And of course, if there is an error, send back a 500 internal server error asd a
     Books
         .findById(req.params.id)
         .then(books => res.json(books.serialize()))
-        .catch(err => {
-        console.error(err);
+        .catch(err => {                                                       // send error if needed.
+        console.error(err); 
         res.status(500).json({ message: "Internal server error" });
         });
     });
 ```
-
-
-
 
 
 </dd>
@@ -195,6 +193,11 @@ And of course, if there is an error, send back a 500 internal server error asd a
 <br>
 
 ## How do you FIND BY VALUE using Mongoose?
+When you find by value, that is, find by optional requests such as author and book or book and isPublished, you need to use```findByValue```. There is a little more to ```findByValue``` than the previous READ operations you need to do:
+
+1. 
+
+
 <dl>
 <dd>
 
