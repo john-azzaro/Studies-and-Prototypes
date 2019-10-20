@@ -32,6 +32,8 @@ In the case of this study, Mongoose has a few ways to *get* the document (stored
 <br>
 
 ## How do you CREATE a document using Mongoose?
+To CREATE a new book, you need to use the ```.create()``` method.
+
 <dl>
 <dd>
 
@@ -290,15 +292,6 @@ And of course, if there is an error, send back a 500 internal server error asd a
             });
     });
 ```
-
-
-
-
-
-        .catch(err => {                                                       // send error if needed.
-        console.error(err); 
-        res.status(500).json({ message: "Internal server error" });
-        });
 
 </dd>
 </dl>
