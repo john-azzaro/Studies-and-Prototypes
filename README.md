@@ -223,7 +223,7 @@ If the client includes either "author" or "title" as URL parameters, it will onl
         const queryableFields = ['author', 'title'];             // query fields
         queryableFields.forEach(field => {                       // for each of the query fields:
             if (req.query[field]) {                              // if the field matches return.... 
-                Books.[field] = req.query[field];                // reutnr the requested values.
+                Books.[field] = req.query[field];                // return the requested values.
             }
         })
         ...
@@ -231,8 +231,74 @@ If the client includes either "author" or "title" as URL parameters, it will onl
 ```
 
 
-### STEP 4: Successful callback!
+### STEP 4: Use the .find method and pass in your filters:
+Remember, if you just use ```.find()``` you will get back ALL the documents in the collection. When you pass in the filters, you are passing in a query criteria object which narrows the search down to those fields you had previously stipulated.
+
+```JavaScript
+    app.get("/books", (req, res) => {       
+        const filter = {};                   
+        const queryableFields = ['author', 'title'];     
+        queryableFields.forEach(field => {           
+            if (req.query[field]) {              
+                Books.[field] = req.query[field];     
+            }
+        })
+        Books
+            .find(filters)
+
+    });
+```
+
+### STEP 5: Successful callback!
 If the request is successful, we use the ```.then``` method to *return a promise* (from models.js). This will send an object with the property ```books``` whose value is an array of ```books``` objects. Then, for each```books``` we get back (i.e. ```books.map()```) from the collection query, call the ```.serialize``` instance method (see the serialize instance method from models.js) so that only certain info will be exposed when the API returns the data (i.e. does not return sensitive information).
+```JavaScript
+    app.get("/books", (req, res) => {       
+        const filter = {};                   
+        const queryableFields = ['author', 'title'];     
+        queryableFields.forEach(field => {           
+            if (req.query[field]) {              
+                Books.[field] = req.query[field];     
+            }
+        })
+        Books
+            .find(filters)
+            .then(Books => res.json(
+                Books.map(books => books.serialize());     // return a json string representing the object
+            ))                                             // produced by the Books serialization method.
+    });
+```
+
+## STEP 4: If unsuccessful, send back error:
+And of course, if there is an error, send back a 500 internal server error asd a response with a message.
+```JavaScript
+    app.get("/books", (req, res) => {       
+        const filter = {};                   
+        const queryableFields = ['author', 'title'];     
+        queryableFields.forEach(field => {           
+            if (req.query[field]) {              
+                Books.[field] = req.query[field];     
+            }
+        })
+        Books
+            .find(filters)
+            .then(Books => res.json(
+                Books.map(books => books.serialize());    
+            ))                                              
+            .catch(err => {                                                     // send error if needed.
+            console.error(err); 
+            res.status(500).json({ message: "Internal server error" });
+            });
+    });
+```
+
+
+
+
+
+        .catch(err => {                                                       // send error if needed.
+        console.error(err); 
+        res.status(500).json({ message: "Internal server error" });
+        });
 
 </dd>
 </dl>
