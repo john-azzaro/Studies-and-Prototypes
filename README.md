@@ -526,7 +526,13 @@ To delete a document from the database collection, you simply need to use the ``
 <dl>
 <dd>
 
-
+```JavaScript
+    app.delete("/books/:id", (req, res) => {
+        Restaurant.findByIdAndRemove(req.params.id)
+            .then(restaurant => res.status(204).end())
+            .catch(err => res.status(500).json({ message: "Internal server error" }));
+    });
+```
 
 
 </dd>
