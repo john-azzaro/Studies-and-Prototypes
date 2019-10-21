@@ -522,8 +522,10 @@ If there is an error, send a server error message and send the message to the cl
 <br>
 
 ## How do you DELETE a document using Mongoose?
+To delete a document from the database collection, you simply need to use the ```findByIdAndRemove``` method.
 <dl>
 <dd>
+
 
 
 
