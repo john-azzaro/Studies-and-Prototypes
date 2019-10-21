@@ -481,12 +481,11 @@ If the promise is fufilled, send a 204 status code.
     });
 ```
 
-
-
 <br>
 
-### STEP 6:
+### STEP 6: If error, send error:
 ---------
+If there is an error, send a server error message and send the message to the client.
 
 ```JavaScript
     app.put("/books/:id", (req, res) => {
@@ -514,20 +513,11 @@ If the promise is fufilled, send a 204 status code.
     });
 ```
 
-
-
-
-
-
 <dl>
 <dd>
 
 
 
-
-
-</dd>
-</dl>
 
 <br>
 
