@@ -376,7 +376,7 @@ First, we need to send a GET request to the /books/:id endpoint.
 -----
 Basically, check to see if the id matches whats in the database and, if not, send an error message.
 ```JavaScript
-    app.put("/restaurants/:id", (req, res) => {
+    app.put("/books/:id", (req, res) => {
         if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
             const message =
             `Request path id (${req.params.id}) and request body id ` +
@@ -391,13 +391,13 @@ Basically, check to see if the id matches whats in the database and, if not, sen
 
 <br>
 
-### STEP 3: 
+### STEP 3: Create an object of fields to be updated:
 --------
-
-
+This object is basically going to hold the updatable fields that we permit to be updated (see ```updateableFields```). Then, for each field that can be updateable, if the field 
+is updated, update.
 
 ```JavaScript
-    app.put("/restaurants/:id", (req, res) => {
+    app.put("/books/:id", (req, res) => {
         if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
             const message =
             `Request path id (${req.params.id}) and request body id ` +
@@ -406,23 +406,87 @@ Basically, check to see if the id matches whats in the database and, if not, sen
             return res.status(400).json({ message: message });
         }
 
-    // we only support a subset of fields being updateable.
-    // if the user sent over any of the updatableFields, we udpate those values
-    // in document
-    const toUpdate = {};
-    const updateableFields = ["name", "borough", "cuisine", "address"];
-
-    updateableFields.forEach(field => {
-        if (field in req.body) {
-        toUpdate[field] = req.body[field];
+        const toUpdate = {};
+        const updateableFields = ["name", "borough", "cuisine", "address"];
+        
+        updateableFields.forEach(field => {
+            if (field in req.body) {
+            toUpdate[field] = req.body[field];
         }
-    });
+        ...
+        ...
+```
 
-    Restaurant
-        // all key/value pairs in toUpdate will be updated -- that's what `$set` does
-        .findByIdAndUpdate(req.params.id, { $set: toUpdate })
-        .then(restaurant => res.status(204).end())
-        .catch(err => res.status(500).json({ message: "Internal server error" }));
+<br>
+
+### STEP 4: 
+--------
+
+
+```JavaScript
+    app.put("/books/:id", (req, res) => {
+        if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+            const message =
+            `Request path id (${req.params.id}) and request body id ` +
+            `(${req.body.id}) must match`;
+            console.error(message);
+            return res.status(400).json({ message: message });
+        }
+
+        const toUpdate = {};
+        const updateableFields = ["name", "borough", "cuisine", "address"];
+        
+        updateableFields.forEach(field => {
+            if (field in req.body) {
+            toUpdate[field] = req.body[field];
+        }
+
+        Restaurant
+            // all key/value pairs in toUpdate will be updated -- that's what `$set` does
+            .findByIdAndUpdate(req.params.id, { $set: toUpdate })          
+            ...
+            ...
+```
+
+<br>
+
+### STEP 5:
+---------
+
+
+
+
+
+
+<br>
+
+### STEP 6:
+---------
+
+```JavaScript
+    app.put("/books/:id", (req, res) => {
+        if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+            const message =
+            `Request path id (${req.params.id}) and request body id ` +
+            `(${req.body.id}) must match`;
+            console.error(message);
+            return res.status(400).json({ message: message });
+        }
+
+        const toUpdate = {};
+        const updateableFields = ["name", "borough", "cuisine", "address"];
+
+        updateableFields.forEach(field => {
+            if (field in req.body) {
+            toUpdate[field] = req.body[field];
+            }
+        });
+
+        Restaurant
+            // all key/value pairs in toUpdate will be updated -- that's what `$set` does
+            .findByIdAndUpdate(req.params.id, { $set: toUpdate })
+            .then(restaurant => res.status(204).end())
+            .catch(err => res.status(500).json({ message: "Internal server error" }));
     });
 ```
 
