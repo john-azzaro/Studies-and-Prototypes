@@ -59,6 +59,8 @@ So to put this into practice, start by creating a GET route:
 <dl>
 <dd>
 
+<br>
+
 ### STEP 1: Create a GET route:
 -----
 First, we need to send a GET request to the /books endpoint.
@@ -68,6 +70,8 @@ First, we need to send a GET request to the /books endpoint.
         ...
     });
 ```
+
+<br>
 
 ### STEP 2: Call the model with the .find method:
 -----
@@ -80,6 +84,8 @@ When you call ```Books.find()```, by default will retrieve all the documents in 
     });
 ```
 
+<br>
+
 ### STEP 3: Add any additional methods before success callback:
 -----
 Sometimes, you have to narrow down the scope of the documents you find in the database. For example, suppose you had a database with hundreds, if not *thousands* of documents. In cases like those, you want to limit the return to only a few documents with the ```.limit``` method. The ```.limit``` method takes one parameter, which is a number defining how many documents to return (i.e. 10).
@@ -91,6 +97,8 @@ Sometimes, you have to narrow down the scope of the documents you find in the da
             ...
     });
 ```
+
+<br>
 
 ### STEP 4: Successful callback!
 -----
@@ -109,6 +117,8 @@ If the request is successful, we use the ```.then``` method to *return a promise
         ...
     });
 ```
+
+<br>
 
 ### STEP 5: And if there is an error, catch as an error:
 -----
@@ -145,6 +155,9 @@ With **find by ID**, your objective is to find an *exact match* for your query. 
 <dl>
 <dd>
 
+
+<br>
+
 ### STEP 1: Create a GET route:
 -----
 Almost identical to the standard ```.find``` route, only this time we are adding an ```/:id``` to the endpoint. 
@@ -154,6 +167,8 @@ Almost identical to the standard ```.find``` route, only this time we are adding
         ...
     });
 ```
+
+<br>
 
 ### STEP 2: Call the model with the ".findById" method:
 -----
@@ -166,6 +181,8 @@ Again, almost identical to th the ```.find``` route, except we want to find the 
             ...
     });
 ```
+
+<br>
 
 ### STEP 3: Successful callback! 
 -----
@@ -180,6 +197,8 @@ which has been processed through the ```.serialize``` instance method
             ...
     });
 ```
+
+<br>
 
 ### STEP 4: If unsuccessful, send back error:
 -----
@@ -216,6 +235,8 @@ When you find by value, that is, find by optional requests such as author and bo
 <dl>
 <dd>
 
+<br>
+
 ### STEP 1: Create a GET route:
 -----
 First, we need to send a GET request to the /books endpoint.
@@ -225,6 +246,8 @@ First, we need to send a GET request to the /books endpoint.
         ...
     });
 ```
+
+<br>
 
 ### STEP 2: Limit GET requests to certain properties:
 -----
@@ -243,6 +266,8 @@ If the client includes either "author" or "title" as URL parameters, it will onl
         ...
     });
 ```
+
+<br>
 
 
 ### STEP 4: Use the .find method and pass in your filters:
@@ -264,6 +289,8 @@ Remember, if you just use ```.find()``` you will get back ALL the documents in t
             ...
     });
 ```
+
+<br>
 
 ### STEP 5: Successful callback:
 -----
@@ -287,6 +314,8 @@ If the request is successful, we use the ```.then``` method to *return a promise
             ...
     });
 ```
+
+<br>
 
 ### STEP 4: If unsuccessful, send back error:
 -----
@@ -328,6 +357,9 @@ When you UPDATE items in your database, you query the database and send a change
 4. **If successful, send the results**.
 5. **If unsuccessful**, send an error message.
 
+
+<br>
+
 ### STEP 1: Create a GET route:
 -----
 First, we need to send a GET request to the /books/:id endpoint.
@@ -337,6 +369,8 @@ First, we need to send a GET request to the /books/:id endpoint.
         ...
     });
 ```
+
+<br>
 
 ### STEP 2:
 -----
