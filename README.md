@@ -39,6 +39,56 @@ To CREATE a new book, you need to use the ```.create()``` method.
 <dl>
 <dd>
 
+<br>
+
+### STEP 1: Create a POST route:
+-----
+First, we need to send a GET request to the /books endpoint.
+```JavaScript
+    app.post("/books", (req, res) => {                                  // POST request to /books endpoint.
+        ...
+        ...
+    });
+```
+
+<br>
+
+### STEP 2: Check if required fields are supplied
+When you create an instance of a document, you want to make sure that at least the required fields for creating an instance are supplied by the client. The required fields are 
+stipulated in the ```requiredFields``` variable. If any of the required fields are missing, we send a message that the field is missing. Note that the required fields outlined here
+are less than the fields allowed in the bookSchema.
+
+```JavaScript
+app.post("/books", (req, res) => {
+  const requiredFields = ["name", "borough", "cuisine"];
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
+
+  ...
+  ...
+
+```
+
+<br>
+
+### STEP 3: Create new instance 
+
+
+
+
+
+
+
+
+
+
+
 ```JavaScript
 app.post("/books", (req, res) => {
   const requiredFields = ["name", "borough", "cuisine"];
@@ -66,7 +116,6 @@ app.post("/books", (req, res) => {
 });
 
 ```
-
 
 </dd>
 </dl>
