@@ -543,7 +543,7 @@ To delete a document from the database collection, you simply need to use the ``
 
 ### How do you handle non-existent endpoints?
 -------
-
+There will undoubtedly be times when the client will submit a request to an enpoint that does not exist. In situations like these, you can create a catch-all middle-ware that will 
 <dl>
 <dd>
 
