@@ -15,6 +15,8 @@ Here's some questions covered in the study:
 * [How do you FIND BY VALUE using Mongoose?](#How-do-you-FIND-BY-VALUE-using-Mongoose)
 * [How do you UPDATE a document using Mongoose?](#How-do-you-UPDATE-a-document-using-Mongoose)
 * [How do you DELETE a document using Mongoose?](#How-do-you-DELETE-a-document-using-Mongoose)
+* [How do you handle non-existent endpoints?](#How-do-you-handle-non-existent-endpoints)
+
 
 <br>
 
@@ -533,6 +535,17 @@ To delete a document from the database collection, you simply need to use the ``
             .catch(err => res.status(500).json({ message: "Internal server error" }));
     });
 ```
+
+</dd>
+</dl>
+
+<br>
+
+### How do you handle non-existent endpoints?
+-------
+
+<dl>
+<dd>
 
 
 </dd>
