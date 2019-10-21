@@ -146,6 +146,7 @@ With **find by ID**, your objective is to find an *exact match* for your query. 
 <dd>
 
 ### STEP 1: Create a GET route:
+-----
 Almost identical to the standard ```.find``` route, only this time we are adding an ```/:id``` to the endpoint. 
 ```JavaScript
     app.get("/books/:id", (req, res) => {             // get request to the /books/:id endpoint.
@@ -155,6 +156,7 @@ Almost identical to the standard ```.find``` route, only this time we are adding
 ```
 
 ### STEP 2: Call the model with the ".findById" method:
+-----
 Again, almost identical to th the ```.find``` route, except we want to find the document by id and pass in the user requested endpoint.
 ```JavaScript
     app.get("/books/:id", (req, res) => {
@@ -166,6 +168,7 @@ Again, almost identical to th the ```.find``` route, except we want to find the 
 ```
 
 ### STEP 3: Successful callback! 
+-----
 If the promise is successful (i.e. if the get request to the endpoint is valid and the id is found), *then* the reponse will be a json object of the book
 which has been processed through the ```.serialize``` instance method
 ```JavaScript
@@ -179,6 +182,7 @@ which has been processed through the ```.serialize``` instance method
 ```
 
 ### STEP 4: If unsuccessful, send back error:
+-----
 And of course, if there is an error, send back a 500 internal server error asd a response with a message.
 
 ```JavaScript
@@ -213,6 +217,7 @@ When you find by value, that is, find by optional requests such as author and bo
 <dd>
 
 ### STEP 1: Create a GET route:
+-----
 First, we need to send a GET request to the /books endpoint.
 ```JavaScript
     app.get("/books", (req, res) => {                                  // GET request to /books endpoint.
@@ -222,6 +227,7 @@ First, we need to send a GET request to the /books endpoint.
 ```
 
 ### STEP 2: Limit GET requests to certain properties:
+-----
 If the client includes either "author" or "title" as URL parameters, it will only return those that match the requested values. This *query criteria* (i.e. ```filter```) will be passed to ```find``` in the next step (i.e. Books.find(filters)).
 
 ```JavaScript
@@ -259,7 +265,8 @@ Remember, if you just use ```.find()``` you will get back ALL the documents in t
     });
 ```
 
-### STEP 5: Successful callback!
+### STEP 5: Successful callback:
+-----
 If the request is successful, we use the ```.then``` method to *return a promise* (from models.js). This will send an object with the property ```books``` whose value is an array of ```books``` objects. Then, for each```books``` we get back (i.e. ```books.map()```) from the collection query, call the ```.serialize``` instance method (see the serialize instance method from models.js) so that only certain info will be exposed when the API returns the data (i.e. does not return sensitive information).
 ```JavaScript
     app.get("/books", (req, res) => {       
@@ -282,6 +289,7 @@ If the request is successful, we use the ```.then``` method to *return a promise
 ```
 
 ### STEP 4: If unsuccessful, send back error:
+-----
 And of course, if there is an error, send back a 500 internal server error asd a response with a message.
 ```JavaScript
     app.get("/books", (req, res) => {       
@@ -313,13 +321,25 @@ And of course, if there is an error, send back a 500 internal server error asd a
 ## How do you UPDATE a document using Mongoose?
 When you UPDATE items in your database, you query the database and send a change to be made using the method ```.findByItAndUpdate```. To do this, we need to:
 
-1. Check to see whether or not the id in the request path AND the request body match.
-2. Create an object of fields to be updated.
-3. 
+1. **Send a GET request** to the endpoint ```/books/:id```.
+1. **Check to see whether or not the id in the request path AND the request body match**.
+2. **Create an object of fields to be updated**.
+3. **Use the ```findByIdAndUpdate```**.
+4. **If successful, send the results**.
+5. **If unsuccessful**, send an error message.
 
+### STEP 1: Create a GET route:
+-----
+First, we need to send a GET request to the /books/:id endpoint.
+```JavaScript
+    app.get("/books/:id", (req, res) => {                          // GET request to /books/:id endpoint.
+        ...
+        ...
+    });
+```
 
-
-
+### STEP 2:
+-----
 
 
 
