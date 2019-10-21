@@ -39,6 +39,33 @@ To CREATE a new book, you need to use the ```.create()``` method.
 <dl>
 <dd>
 
+```JavaScript
+app.post("/books", (req, res) => {
+  const requiredFields = ["name", "borough", "cuisine"];
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
+
+  Book.create({
+    name: req.body.name,
+    borough: req.body.borough,
+    cuisine: req.body.cuisine,
+    grades: req.body.grades,
+    address: req.body.address
+  })
+    .then(book => res.status(201).json(book.serialize()))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    });
+});
+
+```
 
 
 </dd>
@@ -445,7 +472,7 @@ should be updated.
             toUpdate[field] = req.body[field];
         }
 
-        Restaurant
+        Book
             .findByIdAndUpdate(req.params.id, { $set: toUpdate })          
             ...
             ...
@@ -476,9 +503,9 @@ If the promise is fufilled, send a 204 status code.
             }
         });
 
-        Restaurant
+        Book
             .findByIdAndUpdate(req.params.id, { $set: toUpdate })
-            .then(restaurant => res.status(204).end())
+            .then(book => res.status(204).end())
             ...
     });
 ```
@@ -508,9 +535,9 @@ If there is an error, send a server error message and send the message to the cl
             }
         });
 
-        Restaurant
+        Book
             .findByIdAndUpdate(req.params.id, { $set: toUpdate })
-            .then(restaurant => res.status(204).end())
+            .then(book => res.status(204).end())
             .catch(err => res.status(500).json({ message: "Internal server error" }));
     });
 ```
@@ -530,8 +557,8 @@ To delete a document from the database collection, you simply need to use the ``
 
 ```JavaScript
     app.delete("/books/:id", (req, res) => {
-        Restaurant.findByIdAndRemove(req.params.id)
-            .then(restaurant => res.status(204).end())
+        Book.findByIdAndRemove(req.params.id)
+            .then(book => res.status(204).end())
             .catch(err => res.status(500).json({ message: "Internal server error" }));
     });
 ```
