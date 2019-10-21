@@ -33,6 +33,11 @@ In the case of this study, Mongoose has a few ways to *get* the document (stored
 
 <br>
 
+
+
+
+
+
 ## How do you CREATE a document using Mongoose?
 To CREATE a new book, you need to use the ```.create()``` method.
 
@@ -105,11 +110,40 @@ app.post("/books", (req, res) => {
 
 ```
 
+<br>
 
+### STEP 4: Callback success!
+If the creation of a book succeeeds, the return response to the client will be the book object created by the ```book.serialize``` instance method.
 
+```JavaScript
+app.post("/books", (req, res) => {
+  const requiredFields = ["name", "borough", "cuisine"];
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
 
+  Book.create({
+    name: req.body.name,
+    borough: req.body.borough,
+    cuisine: req.body.cuisine,
+    grades: req.body.grades,
+    address: req.body.address
+  })
+    .then(book => res.status(201).json(book.serialize()))
+    ...
+    ...
+});
+```
 
+<br>
 
+### STEP 5: IF error, send error:
+And if there is an error, send a 500 status code (server error) and an message to the client.
 
 ```JavaScript
 app.post("/books", (req, res) => {
@@ -136,12 +170,11 @@ app.post("/books", (req, res) => {
       res.status(500).json({ message: "Internal server error" });
     });
 });
-
-
-
+```
 
 </dd>
 </dl>
+
 
 <br>
 
@@ -617,9 +650,6 @@ If there is an error, send a server error message and send the message to the cl
 <dl>
 <dd>
 
-
-
-
 <br>
 
 ## How do you DELETE a document using Mongoose?
@@ -640,8 +670,7 @@ To delete a document from the database collection, you simply need to use the ``
 
 <br>
 
-### How do you handle non-existent endpoints?
--------
+## How do you handle non-existent endpoints?
 There will undoubtedly be times when the client will submit a request to an enpoint that does not exist. In situations like these, you can create a catch-all middle-ware that will send a 404 status and message to the client.
 <dl>
 <dd>
