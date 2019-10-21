@@ -77,11 +77,33 @@ app.post("/books", (req, res) => {
 
 <br>
 
-### STEP 3: Create new instance 
+### STEP 3: Create new instance using the the bookSchema model:
+Following the previous step, which checked to see f the required fields were in the request body, you can bow create an instance of a book. To do this, you first call ```Book.create``` with the permissible fields.
 
+```JavaScript
+app.post("/books", (req, res) => {
+  const requiredFields = ["name", "borough", "cuisine"];
+  for (let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
 
+  Book.create({
+    name: req.body.name,
+    borough: req.body.borough,
+    cuisine: req.body.cuisine,
+    grades: req.body.grades,
+    address: req.body.address
+  })
+    ...
+    ...
+});
 
-
+```
 
 
 
@@ -115,7 +137,8 @@ app.post("/books", (req, res) => {
     });
 });
 
-```
+
+
 
 </dd>
 </dl>
