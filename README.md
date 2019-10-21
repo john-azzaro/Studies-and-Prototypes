@@ -351,11 +351,11 @@ And of course, if there is an error, send back a 500 internal server error asd a
 When you UPDATE items in your database, you query the database and send a change to be made using the method ```.findByItAndUpdate```. To do this, we need to:
 
 1. **Send a GET request** to the endpoint ```/books/:id```.
-1. **Check to see whether or not the id in the request path AND the request body match**.
-2. **Create an object of fields to be updated**.
-3. **Use the ```findByIdAndUpdate```**.
-4. **If successful, send the results**.
-5. **If unsuccessful**, send an error message.
+2. **Check to see whether or not the id in the request path AND the request body match**.
+3. **Create an object of fields to be updated**.
+4. **Use the ```findByIdAndUpdate```**.
+5. **If successful, send the results**.
+6. **If unsuccessful**, send an error message.
 
 
 <br>
@@ -372,8 +372,27 @@ First, we need to send a GET request to the /books/:id endpoint.
 
 <br>
 
-### STEP 2:
+### STEP 2: Make sure the id in the request path match the body:
 -----
+Basically, check to see if the id matches whats in the database and, if not, send an error message.
+```JavaScript
+    app.put("/restaurants/:id", (req, res) => {
+        if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+            const message =
+            `Request path id (${req.params.id}) and request body id ` +
+            `(${req.body.id}) must match`;
+            console.error(message);
+            return res.status(400).json({ message: message });
+        }
+        ...
+        ...
+    });
+```
+
+<br>
+
+### STEP 3: 
+--------
 
 
 
